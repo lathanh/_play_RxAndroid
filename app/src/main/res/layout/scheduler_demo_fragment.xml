@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+  <data>
+    <import type="android.view.View"/>
+    <import type="org.lathanh.play.loading.LoadingState"/>
+    <variable name="loadingDataVm"
+              type="org.lathanh.play.rxandroid.demo.scheduler.SchedulerDemoFragment.RandomNumberLoadableViewModel"/>
+  </data>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+      <!-- LoadingState: Initial -->
+      <FrameLayout
+          android:id="@+id/ls_initial"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="@{loadingDataVm.loadingState == null ? View.VISIBLE : View.INVISIBLE}">
+        <Button
+            android:text="Load Data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:onClick="@{(view) -> loadingDataVm.onClick()}"
+            />
+      </FrameLayout>
+
+      <!-- LoadingState: Loading -->
+      <FrameLayout
+          android:id="@+id/ls_loading"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="@{loadingDataVm.loadingState == LoadingState.LOADING ? View.VISIBLE : View.INVISIBLE}">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+      </FrameLayout>
+
+      <!-- LoadingState: Content -->
+      <FrameLayout
+          android:id="@+id/ls_content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="@{loadingDataVm.loadingState == LoadingState.DATA ? View.VISIBLE : View.INVISIBLE}">
+        <TextView
+            android:text="@{loadingDataVm.dataString}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_string"/>
+      </FrameLayout>
+
+    </FrameLayout>
+  </RelativeLayout>
+</layout>
